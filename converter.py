@@ -68,8 +68,9 @@ class Converter():
         input_cat.unsqueeze_(0)
         
         # feed into model
-        coded_sp_converted_norm = self.G(input_sp, input_cat).data.cpu().numpy()
-        lf0 = self.Gf0(input_lf0, input_cat).data.cpu().numpy()
+        with torch.no_grad():
+            coded_sp_converted_norm = self.G(input_sp, input_cat).data.cpu().numpy()
+            lf0 = self.Gf0(input_lf0, input_cat).data.cpu().numpy()
         coded_sp_converted_norm, lf0 = np.squeeze(coded_sp_converted_norm, axis=(0, 1)), np.squeeze(lf0, axis=(0))
         
         ########## Recover ###############
